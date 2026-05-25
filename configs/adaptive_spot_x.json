@@ -1,0 +1,37 @@
+{
+  "strategy": "AdaptiveSpotX",
+
+  "max_open_trades": 8,
+  "stake_currency": "USDT",
+  "stake_amount": "unlimited",
+  "tradable_balance_ratio": 0.99,
+  "fiat_display_currency": "USD",
+
+  "timeframe": "5m",
+
+  "dry_run": true,
+  "dry_run_wallet": 1000,
+
+  "cancel_open_orders_on_exit": false,
+  "use_exit_signal": true,
+  "exit_profit_only": false,
+  "ignore_roi_if_entry_signal": true,
+
+  "order_types": {
+    "entry": "limit",
+    "exit": "limit",
+    "stoploss": "market",
+    "stoploss_on_exchange": false
+  },
+
+  "order_time_in_force": {
+    "entry": "GTC",
+    "exit": "GTC"
+  },
+
+  "add_config_files": [
+    "configs/trading_mode-spot.json",
+    "configs/pairlist-volume-binance-usdt.json",
+    "configs/blacklist-binance.json"
+  ]
+}
