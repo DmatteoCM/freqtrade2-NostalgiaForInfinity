@@ -77,10 +77,9 @@ class AdaptiveSpotX(IStrategy):
         "cond3_rsi_5m_min":     52,
         "cond3_rsi_5m_max":     72,
         "cond3_volume_mult":    2.0,
-        # DCA
-        "dca1_trigger":        -0.08,
-        "dca2_trigger":        -0.14,
-        "dca_stake_ratio":      0.25,
+        # DCA — trigger ottimizzabili, importi fissi (25 e 30 USDC)
+        "dca1_trigger": -0.08,
+        "dca2_trigger": -0.14,
     }
 
     sell_params = {
@@ -124,9 +123,14 @@ class AdaptiveSpotX(IStrategy):
     exit_bb_proximity      = DecimalParameter(0.970, 1.000, default=0.985, decimals=3, space="sell", optimize=True, load=True)
 
     # --- DCA ---
-    dca1_trigger    = DecimalParameter(-0.15, -0.05, default=-0.08, decimals=2, space="buy", optimize=True, load=True)
-    dca2_trigger    = DecimalParameter(-0.25, -0.10, default=-0.14, decimals=2, space="buy", optimize=True, load=True)
-    dca_stake_ratio = DecimalParameter(0.15,   0.40, default=0.25,  decimals=2, space="buy", optimize=True, load=True)
+    # I trigger sono ottimizzabili; gli importi sono fissi (25 e 30 USDC)
+    dca1_trigger = DecimalParameter(-0.15, -0.05, default=-0.08, decimals=2, space="buy", optimize=True, load=True)
+    dca2_trigger = DecimalParameter(-0.25, -0.10, default=-0.14, decimals=2, space="buy", optimize=True, load=True)
+
+    # Importi fissi per ogni DCA — in USDC (non percentuale)
+    # Entry: 20 USDC (stake_amount nel config) + DCA1: 25 + DCA2: 30 = 75 USDC max
+    dca1_amount: float = 25.0
+    dca2_amount: float = 30.0
 
     # =========================================================================
     # FIXED STRATEGY SETTINGS
@@ -370,9 +374,9 @@ class AdaptiveSpotX(IStrategy):
             return None
 
         if buys == 1 and current_profit < self.dca1_trigger.value:
-            return trade.stake_amount * self.dca_stake_ratio.value
+            return self.dca1_amount   # 25 USDC fissi
 
         if buys == 2 and current_profit < self.dca2_trigger.value:
-            return trade.stake_amount * self.dca_stake_ratio.value
+            return self.dca2_amount   # 30 USDC fissi
 
         return None

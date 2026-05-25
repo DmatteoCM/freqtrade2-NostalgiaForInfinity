@@ -2,7 +2,7 @@
   "strategy": "AdaptiveSpotX",
 
   "max_open_trades": 3,
-  "stake_currency": "USDT",
+  "stake_currency": "USDC",
   "stake_amount": 20,
   "tradable_balance_ratio": 0.99,
   "fiat_display_currency": "USD",
@@ -31,7 +31,8 @@
 
   "add_config_files": [
     "configs/trading_mode-spot.json",
-    "configs/pairlist-volume-binance-usdt.json",
+    "configs/exchange-binance-bnb.json",
+    "configs/pairlist-volume-binance-usdc.json",
     "configs/blacklist-binance.json"
   ]
 }
