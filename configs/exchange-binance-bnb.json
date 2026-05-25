@@ -1,0 +1,22 @@
+{
+  // Binance spot — fee pagate con BNB (sconto 25%)
+  // Metti exchange.key e exchange.secret in exampleconfig_secret.json
+  //
+  // Fee live: Binance usa BNB automaticamente se hai BNB nel wallet
+  //           e hai attivato "Use BNB for fees" nell'account Binance.
+  // Fee backtest/dry-run: il valore sotto dice a freqtrade di simulare
+  //           lo sconto BNB nelle sue proiezioni di profitto.
+  //
+  //  Fee standard Binance spot:   0.10% = 0.001
+  //  Fee con BNB (sconto 25%):    0.075% = 0.00075   ← usato qui
+  "exchange": {
+    "name": "binance",
+    "fee": 0.00075,
+    "ccxt_config": {
+      "enableRateLimit": true
+    },
+    "ccxt_async_config": {
+      "enableRateLimit": true
+    }
+  }
+}
